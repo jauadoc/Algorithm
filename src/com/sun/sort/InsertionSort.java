@@ -3,7 +3,7 @@ package com.sun.sort;
 /**
  * 算法导论第一章
  * 算法类别：排序算法
- * 算法1.插入排序算法
+ * 【算法1】.插入排序算法
  *  @注意：
  *  1.其中循环的参数表示位置，而非从0开始
  *      如2-length 即代码中 [1]-[length-1]
@@ -44,6 +44,8 @@ public class InsertionSort {
      */
     public static int[] insertionSortAsc(int[] sortArray){
 
+        int runtime = 0;
+
         //从数组第二个位置开始遍历
         for(int i=1; i<sortArray.length; i++){
             //记录当前位置的值
@@ -54,11 +56,12 @@ public class InsertionSort {
             while(beforePoint >= 0 && sortArray[beforePoint]>currentValue){
                 sortArray[beforePoint+1] = sortArray[beforePoint];
                 beforePoint--;
+                runtime++;
             }
             //由于currentValue>前面位置的值或前面没有值，则该位置即该值应该在的位置，但由于while将位置-1，所以此处需要+1
             sortArray[beforePoint+1] = currentValue;
         }
-
+        System.out.println("比较次数："+runtime);
         return sortArray;
     }
 
@@ -83,11 +86,14 @@ public class InsertionSort {
     }
 
     public static void main(String[] args) {
-        int[] test = {7,1,5,11,2,6,3,7};
+//        int[] test = SortConstant.sortArray;
+        //输入规模大时算法效率较低
+        int[] test = SortConstant.getRandomArray(55);
         test = insertionSortAsc(test);
         for(int value : test){
             System.out.println(value);
         }
+        SortConstant.splitLine();
         test = insertionSortDesc(test);
         for(int value : test){
             System.out.println(value);
