@@ -19,7 +19,7 @@ public class SortConstant {
     /**
      * 数组数字范围0-1000
      */
-    public static final int nextInt = 1000;
+    public static final int nextInt = 1024;
 
     public static final int arrayLength = 666;
 
