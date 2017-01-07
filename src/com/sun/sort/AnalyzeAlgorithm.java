@@ -15,6 +15,8 @@ package com.sun.sort;
  * @增长量级
  * 一个更简化的抽象：即运行时间的增长率或增长量级。<br>
  * 所以只考虑公式中最重要的项(如an^2+bn+c中an^2项) ps:个人感觉时间复杂度是不是同理？虽然时间复杂度是数学模型计算出的<br>
+ * PS:<b>渐近精确界记号：Θ</b><br>
+ * 当俩个函数趋近于无穷时越来越接近，则可以表示为f(n)=Θ(g(n))
  *
  * @author sunx(sunxin@strongit.com.cn)<br/>
  * @version V1.0.0<br/>
@@ -22,6 +24,7 @@ package com.sun.sort;
 
 public class AnalyzeAlgorithm {
 
+    public static int runTime = 0;
     /**
      * @练习2.2-2
      * 1.2分析算法的方式
@@ -40,7 +43,6 @@ public class AnalyzeAlgorithm {
      * 选择排序算法
      */
     public static int[] selectMin(int[] sortArray){
-        int runTime = 0;
         for(int i=0; i<sortArray.length; i++){
             int changeIndex = i;
             int min = sortArray[i];
@@ -56,18 +58,41 @@ public class AnalyzeAlgorithm {
             sortArray[changeIndex] = sortArray[i];
             sortArray[i] = min;
         }
-        System.out.println("比较次数："+runTime);
         return sortArray;
     }
 
+    /**
+     * @算法分析-归并排序
+     * 假定<b>规模为n</b>的问题求解时间如下<br>
+     *  1.求解规模为1的时间 Θ(1)<br>
+     *  2.分解求解时间 <br>
+     *      --将问题分解为a个子问题，每个子问题的规模为1/b，每个执行时间为函数T()，则每个子问题的规模为n/b，则子问题所需时间为T(n/b)，分解问题所需的时间为D(n)，合并问题解所需的时间为C(n)<br>
+     *      ---- <b>递归式(递归方程)</b>如下: (当问题小于不可分割值c时，问题无法被分割，直接求解)<br>
+     *      ---- =>T(n)=Θ(1)  当n<=c<br>
+     *      ---- =>T(n)=aT(n/b)+D(n)+C(n) 当n>c<br>
+     *      ----也就是当可递归时进行递归，当不满足递归时直接求解问题<br>
+     * @归并排序
+     * 假定归并排序的规模为2^n，这样每次分解的子问题都为n/2个，便于递归式分析（而且此假定不影响算法解的增量式）<br>
+     * 合并时所需要比较的次数，最多为n次，则C(n)=Θ(n)；分解则直接分解，不需比较为Θ(1) =>C(n)+D(n)≈Θ(n)<br>
+     * --则归并排序算法的递归式如下:(当n<=1是无法被分为俩份，则直接求解该次比较时间)<br>
+     * ---- =>T(n)=Θ(1)  当n<=1，规模为1的问题 <br>
+     * ---- =>T(n)=2T(n/2)+Θ(n) 当n>1 规模为n的问题<br>
+     * ------假定规模为1的问题处理时间为c（这里的c和上面的c不同）<br>
+     * ------ =>T(n)=c  当n<=1 <br>
+     * ------ =>T(n)=2T(n/2)+cn 当n>1<br>
+     * --------由上可得出一个递归树(T(n/n)=T(1)=假定规模1的处理时间c)<br>
+     * --------由于T(n)=2T(n/2)+cn递归执行=> T(n)=cn+2T(n/2)+4T(n/4)+...+nT(n/n)=>T(n)=cn+2(cn/2)+4(cn/4)+...+n(cn/n)=>T(n)=cnlgn+cn
+     * ----------所以归并排序算法的Θ(T(n))=Θ(nlgn)
+     */
+    public static void analyzeMergeSort(){}
+
     public static void main(String[] args) {
-        int[] sortArray = SortConstant.sortArray;
-        //输入规模大时算法效率较低
-//        int[] sortArray = SortConstant.getRandomArray(55);
+        int[] sortArray = SortConstant.getRandomArray();
         int[] sorted = selectMin(sortArray);
         for(int temp : sorted){
             System.out.println(temp);
         }
+        System.out.println("比较次数："+runTime);
     }
     /**
      * @练习2.2-3
@@ -79,5 +104,4 @@ public class AnalyzeAlgorithm {
      *
      * 额外：堆排序
      */
-
 }

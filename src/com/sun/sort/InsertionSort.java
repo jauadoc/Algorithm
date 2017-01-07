@@ -37,6 +37,7 @@ package com.sun.sort;
 
 public class InsertionSort {
 
+    public static int runtime = 0;
     /**
      * 升序插入排序
      * @param sortArray
@@ -44,7 +45,6 @@ public class InsertionSort {
      */
     public static int[] insertionSortAsc(int[] sortArray){
 
-        int runtime = 0;
 
         //从数组第二个位置开始遍历
         for(int i=1; i<sortArray.length; i++){
@@ -61,7 +61,6 @@ public class InsertionSort {
             //由于currentValue>前面位置的值或前面没有值，则该位置即该值应该在的位置，但由于while将位置-1，所以此处需要+1
             sortArray[beforePoint+1] = currentValue;
         }
-        System.out.println("比较次数："+runtime);
         return sortArray;
     }
 
@@ -88,7 +87,7 @@ public class InsertionSort {
     public static void main(String[] args) {
 //        int[] test = SortConstant.sortArray;
         //输入规模大时算法效率较低
-        int[] test = SortConstant.getRandomArray(55);
+        int[] test = SortConstant.getRandomArray();
         test = insertionSortAsc(test);
         for(int value : test){
             System.out.println(value);
@@ -98,6 +97,7 @@ public class InsertionSort {
         for(int value : test){
             System.out.println(value);
         }
+        System.out.println("比较次数："+runtime);
     }
     /**
      * 线性查找算法伪代码

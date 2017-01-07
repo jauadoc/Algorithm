@@ -124,7 +124,7 @@ public class DivideAlgorithm {
 
     public static void main(String[] args) {
 //        int[] test = SortConstant.sortArray;
-        int[] test = SortConstant.getRandomArray(4);
+        int[] test = SortConstant.getRandomArray();
         for(int value : test){
             System.out.println(value);
         }
