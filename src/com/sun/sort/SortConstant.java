@@ -3,7 +3,7 @@ package com.sun.sort;
 import java.util.Random;
 
 /**
- *
+ * 算法测试帮助类，提供如随机数组等多处使用的工具。
  * @author sunx(sunxin@strongit.com.cn)<br/>
  * @version V1.0.0<br/>
  * @see {@link }
@@ -21,7 +21,7 @@ public class SortConstant {
      */
     public static final int nextInt = 1024;
 
-    public static final int arrayLength = 666;
+    public static final int arrayLength = 66666;
 
     public static void splitLine(){
         System.out.println("=================================================");
@@ -49,4 +49,8 @@ public class SortConstant {
         return getRandomArray(arrayLength);
     }
 
+
+    //===================================================================================
+    //====================================归并排序算法====================================
+    //===================================================================================
 }
