@@ -29,6 +29,7 @@ public class Client {
         }
         endTime = System.currentTimeMillis();
         System.out.println("耗时："+(endTime-startTime)+"ms");
+        System.out.println("逆序对数为："+Sort.agCount);
         System.out.println("归并排序次数："+Sort.mergeSortTime);
         System.out.println("归并次数："+Sort.mergeTime);
         System.out.println("比较次数："+Sort.runTime);
@@ -50,8 +51,17 @@ public class Client {
         System.out.println("比较次数："+Sort.runTime);
     }
 
+    /**
+     * 霍纳规则
+     */
+    public static void doHorner(){
+        int[] arr = {1,2,3,4,5,6,7};
+        System.out.println(Sort.horner(arr, 0, 1, 2));
+    }
+
     public static void main(String[] args) {
 //        doInsertSort();
-//        doMergeSort();
+        doMergeSort();
+//        doHorner();
     }
 }

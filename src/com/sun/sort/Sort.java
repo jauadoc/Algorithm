@@ -162,6 +162,8 @@ public class Sort {
         return sortArray;
     }
 
+    public static int agCount = 0;
+
     /**
      * 归并俩个数组
      * @param sortArray
@@ -198,6 +200,7 @@ public class Sort {
                     leftIndex++;
                 }else{
                     sortArray[i] = right[rightIndex];
+                    agCount += middle - i + 1;
                     rightIndex++;
                 }
                 //比较俩个数组当前位置值大小，则比较次数+1
@@ -209,5 +212,42 @@ public class Sort {
         //执行归并的次数+1
         mergeTime++;
         return sortArray;
+    }
+
+
+    //===================================================================================
+    //====================================霍纳规则========================================
+    //===================================================================================
+    /**
+     * 霍纳规则求n次多项式的和，将时间复杂度从n(n-1)/2降低到n（原来是n(n-1)/2次加法+n(n-1)/2次乘法，降低到n次加法+n次乘法）<br>
+     * 递归形式霍纳规则<br>
+     * @param arr n次多项式的系数数组
+     * @param n n次多项式的个数
+     * @param i 当前是第几层
+     * @param x x变量值
+     * @return
+     */
+    public static int horner(int[]arr,int i, int n, int x){
+        int sum = 0;
+        if(i == n){//当到达n次时直接返回系数，否则继续递归
+            return arr[n];
+        }
+        sum = arr[i] + x*horner(arr, i+1,n ,x);
+        return sum;
+    }
+    /**
+     * 非递归形式霍纳规则<br>
+     * @param arr 系数数组
+     * @param n n次多项式
+     * @param x x变量值
+     * @return
+     */
+    public static int horner3(int[]arr, int n, int x){
+        int sum = arr[n]*x+arr[n-1];
+        n--;
+        for(;n>0;n--){
+            sum = sum*x+arr[n-1];
+        }
+        return sum;
     }
 }
