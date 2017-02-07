@@ -60,8 +60,8 @@ public class Client {
     }
 
     public static void main(String[] args) {
-//        doInsertSort();
-        doMergeSort();
+        doInsertSort();
+//        doMergeSort();
 //        doHorner();
     }
 }
