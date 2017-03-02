@@ -4,7 +4,6 @@ package com.sun.sort;
  * 测试类，用于测试算法是否正确
  * @author sunx(sunxin@strongit.com.cn)<br/>
  * @version V1.0.0<br/>
- * @see {@link }
  */
 
 public class Client {
