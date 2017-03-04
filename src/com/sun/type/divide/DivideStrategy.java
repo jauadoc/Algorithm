@@ -108,9 +108,70 @@ public class DivideStrategy {
         }
     }
 
+    /**
+     * 线性的最大子数组查找<br>
+     * 从左至右查找，只要一段子数组和<0，则前面的最大值即前一段数据的最大子数组。<br>
+     * 然后再继续查找，找出多段的最大子数组，然后返回这些段内最大子数组中最大的一个。<br>
+     * 总结：从左至右，分段找出每一段中的最大子数组，然后返回其中最大的，分段的方法为：若arr[i...j]<0，则进入下一段。
+     * @param arr
+     */
+    public static int maxSubArrayWithLinear(int[] arr){
+        //每一段的最大值（直至这一段的和<0，则重新计算下一段）
+        int tempSum = 0;
+        int maxSum = 0;
+        for(int i=0; i<arr.length; i++){
+            tempSum += arr[i];
+            if(tempSum > maxSum){//如果这一段的最大值大于当前记录的最大值，则覆盖最大值
+                maxSum = tempSum;
+            }
+            if(tempSum < 0){//如果这一段的最大值<0，则本段+下段的值<下段的值（ tempSum+nextSubArr < nextSubArr，因为tempSum<0）
+                tempSum = 0;
+            }
+        }
+        return maxSum;
+    }
+
+    /**
+     * 线性的最大子数组查找，返回最大子数组对象（包含起止位置和最大子数组的和）<br>
+     * 从左至右查找，只要一段子数组和<0，则前面的最大值区域即前一段子数组的最大子数组。<br>
+     * 然后再继续查找，找出多段的最大子数组，然后返回这些段内最大子数组中最大的一个。<br>
+     * 总结：从左至右，分段找出每一段中的最大子数组，然后返回其中最大的，分段的方法为：若arr[i...j]<0，则进入下一段。
+     * @param arr
+     */
+    public static SubArray maxSubArrayWithLinearSubObj(int[] arr){
+        //每一段的子数组（直至这一段的和<0，则重新计算下一段）
+        SubArray tempSubArray = new SubArray(0, 0, 0);
+        //所有段子数组中最大的那一个
+        SubArray maxSubArray = new SubArray(0, 0, 0);
+
+
+        for(int i=0; i<arr.length; i++){
+            tempSubArray.setSum(tempSubArray.getSum() + arr[i]);
+            if(tempSubArray.getSum() > maxSubArray.getSum()){//如果这一段的最大值大于当前记录的最大值，则覆盖最大值
+                //更新最大子数组信息
+                maxSubArray.setLow(tempSubArray.getLow());
+                maxSubArray.setHigh(i);
+                maxSubArray.setSum(tempSubArray.getSum());
+            }
+            if(tempSubArray.getSum() < 0){//如果这一段的最大值<0，则本段+下段的值<下段的值（ tempSum+nextSubArr < nextSubArr，因为tempSum<0）
+                //更新当前这段子数组的信息
+                tempSubArray.setLow(i+1);
+                tempSubArray.setHigh(i+1);
+                tempSubArray.setSum(0);
+            }
+        }
+        return maxSubArray;
+    }
+
     public static void main(String[] args) {
         //传递参数起止位置为数组起止位置0-arr.length-1
-        SubArray maximumSubArray = findMaximumSubarray(new int[]{1,-2,5,-3,6,-4,-1,7}, 0, 7);
+        //存在bug，待修复
+        SubArray maximumSubArray = findMaximumSubarray(new int[]{1,-2,5,-3,6,-4,-1,117,111,2}, 0, 9);
+//        SubArray maximumSubArray = findMaximumSubarray(new int[]{-1,-2,-5,-3,-6,-4,-1,-7}, 0, 7);
         System.out.println(maximumSubArray);
+
+        int test =maxSubArrayWithLinear(new int[]{1,-2,5,-3,6,-4,-1,6});
+        System.out.println(test);
+        System.out.println(maxSubArrayWithLinearSubObj(new int[]{1,-2,5,-3,6,-4,-1,6}));
     }
 }
